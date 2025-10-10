@@ -11,7 +11,9 @@ Preferred communication style: Simple, everyday language.
 ### Critical Configuration Rules
 - **⚠️ NEVER recreate workflows using `workflows_set_run_config_tool`** - this overwrites port mappings
 - **Port Configuration**: Internal port 5000 MUST map to external port 5000 (not :80)
-  - User manually configured this in Networking tool
+  - **CRITICAL**: Configure in Replit Networking tool: Internal Port 5000 → External Port 5000
+  - Server runs on port 5000 internally (server.py)
+  - Must be manually configured in Networking settings for preview to work
   - Always use `restart_workflow` to restart the server, never create new workflows
   - Port mapping is saved in `.replit` file (lines 46-47: `localPort = 5000, externalPort = 5000`)
 - **Workflow Management**: Only use `restart_workflow("Server")` to restart - NEVER use `workflows_set_run_config_tool`
@@ -118,7 +120,7 @@ Preferred communication style: Simple, everyday language.
 - Widget positioned at the bottom-right corner (lowest position)
 - Desktop: 20px from bottom, Mobile: 15px from bottom
 - Mavilda chat widget repositioned above Vapi widget
-- Desktop: Mavilda button at 140px, chat window at 210px from bottom
+- Desktop: Mavilda button at 100px, chat window at 170px from bottom (optimized spacing)
 - Mobile: Responsive positioning with calculated heights to prevent overflow
 - Mobile: Mavilda button at 90px, chat window at 160px with height: calc(100vh - 180px)
 - Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)

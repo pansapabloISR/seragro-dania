@@ -1889,11 +1889,11 @@ vapi-widget {
 /* Ajustar el botón de Mavilda para que esté ENCIMA del widget de Vapi - SOLO DESKTOP */
 @media (min-width: 769px) {
     #mavilda-chat-button {
-        bottom: 140px !important;
+        bottom: 100px !important; /* Más cerca de Vapi pero con buena separación */
     }
     
     #mavilda-chat-window {
-        bottom: 210px !important;
+        bottom: 170px !important; /* Ajustado proporcionalmente */
     }
 }
 
