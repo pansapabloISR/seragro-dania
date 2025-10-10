@@ -39,6 +39,14 @@ Preferred communication style: Simple, everyday language.
   - Auto-greeting functionality
   - Floating oval button with green brand colors (#2E7D32)
   - Agent image: "mavilda ingeniera agronoma.png"
+  - Positioned above Vapi widget (desktop: 140px from bottom, mobile: 90px from bottom)
+- **Vapi Voice Widget**: Voice call integration for customer support
+  - Public key: 5a29292f-d9cc-4a21-bb7e-ff8df74763cd
+  - Assistant ID: bef90f5f-3a0b-4dc4-ad56-742a764d9fa1
+  - Positioned at the bottom-right corner (lowest position)
+  - Desktop: 20px from bottom, Mobile: 15px from bottom
+  - Title: "Si quieres llamar a Mavilda"
+  - Dark theme with teal accent (#14B8A6)
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
   - Positioned 110px from bottom for optimal spacing with Mavilda button
@@ -104,3 +112,14 @@ Preferred communication style: Simple, everyday language.
 - Floating buttons optimized for mobile: WhatsApp at 50px from edge, Mavilda at 40px from edge
 - Desktop buttons at 40px from right edge for consistent spacing
 - Added SO_REUSEADDR to server.py for immediate port reuse after restart
+
+### Vapi Voice Widget Integration (October 10, 2025)
+- Integrated Vapi voice call widget for customer support
+- Widget positioned at the bottom-right corner (lowest position)
+- Desktop: 20px from bottom, Mobile: 15px from bottom
+- Mavilda chat widget repositioned above Vapi widget
+- Desktop: Mavilda button at 140px, chat window at 210px from bottom
+- Mobile: Responsive positioning with calculated heights to prevent overflow
+- Mobile: Mavilda button at 90px, chat window at 160px with height: calc(100vh - 180px)
+- Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)
+- All widgets fully accessible across all breakpoints with overflow-y: auto for scroll support
