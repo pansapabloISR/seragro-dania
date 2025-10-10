@@ -1873,3 +1873,62 @@ ul li::before {
         right: 50px !important;
     }
 }
+
+/* ================================================
+   POSICIONAMIENTO DE WIDGETS (Vapi + Mavilda)
+   ================================================ */
+
+/* Widget de Vapi - posición más baja (ABAJO DE TODO) */
+vapi-widget {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9998 !important; /* Un poco menos que Mavilda */
+}
+
+/* Ajustar el botón de Mavilda para que esté ENCIMA del widget de Vapi - SOLO DESKTOP */
+@media (min-width: 769px) {
+    #mavilda-chat-button {
+        bottom: 140px !important;
+    }
+    
+    #mavilda-chat-window {
+        bottom: 210px !important;
+    }
+}
+
+/* Ajustes para tablets y móviles - conservador para evitar overflow */
+@media (max-width: 768px) {
+    /* En móvil, mantener offsets mínimos cerca de los originales del widget */
+    #mavilda-chat-button {
+        bottom: 90px !important;
+        right: 20px !important;
+    }
+    
+    #mavilda-chat-window {
+        /* Usar height en lugar de max-height para sobrescribir el calc del widget */
+        bottom: 160px !important;
+        right: 10px !important;
+        height: calc(100vh - 180px) !important; /* Sobrescribir height original */
+        max-height: none !important;
+        overflow-y: auto !important;
+    }
+    
+    vapi-widget {
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+}
+
+/* Para pantallas muy pequeñas - ajustes conservadores */
+@media (max-width: 480px) {
+    #mavilda-chat-button {
+        bottom: 90px !important;
+    }
+    
+    #mavilda-chat-window {
+        bottom: 150px !important;
+        height: calc(100vh - 170px) !important; /* Ajustado para pantallas pequeñas */
+        overflow-y: auto !important;
+    }
+}
