@@ -44,14 +44,16 @@ Preferred communication style: Simple, everyday language.
   - Positioned above Vapi widget (desktop: 140px from bottom, mobile: 90px from bottom)
 - **Vapi Voice Widget**: Voice call integration for customer support
   - Public key: 5a29292f-d9cc-4a21-bb7e-ff8df74763cd
-  - Assistant ID: bef90f5f-3a0b-4dc4-ad56-742a764d9fa1
+  - Assistant ID: 776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4
   - Positioned at the bottom-right corner (lowest position)
   - Desktop: 20px from bottom, Mobile: 15px from bottom
-  - Title: "Si quieres llamar a Mavilda"
+  - Title: "Si quieres hablar con Mavilda"
+  - Size: full, Border radius: large
   - Dark theme with teal accent (#14B8A6)
+  - Consent: not required
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
-  - Positioned 110px from bottom for optimal spacing with Mavilda button
+  - Positioned above all other widgets (desktop: 180px from bottom, mobile: 170px)
   - Updated phone number: +54 (93465) 432688
 
 ### Styling Approach
@@ -119,9 +121,12 @@ Preferred communication style: Simple, everyday language.
 - Integrated Vapi voice call widget for customer support
 - Widget positioned at the bottom-right corner (lowest position)
 - Desktop: 20px from bottom, Mobile: 15px from bottom
+- Updated to assistant ID: 776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4
+- Configuration: size="full", border-radius="large", consent-required="false"
 - Mavilda chat widget repositioned above Vapi widget
 - Desktop: Mavilda button at 100px, chat window at 170px from bottom (optimized spacing)
 - Mobile: Responsive positioning with calculated heights to prevent overflow
 - Mobile: Mavilda button at 90px, chat window at 160px with height: calc(100vh - 180px)
 - Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)
+- WhatsApp button repositioned above all widgets (desktop: 180px, mobile: 170px) to prevent overlap
 - All widgets fully accessible across all breakpoints with overflow-y: auto for scroll support
