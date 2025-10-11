@@ -137,7 +137,10 @@ Preferred communication style: Simple, everyday language.
 - Chat header: Green gradient matching brand colors
 - User messages: Green gradient for consistency
 - Input focus and send button: Green theme throughout
+- Voice assistant icon changed from microphone 🎤 to phone 📞 for better clarity
 - Voice assistant: Auto-activates Vapi widget when selected (enhanced with multiple activation methods)
+- Implemented advanced auto-activation system for Vapi widget with recursive retry logic (up to 10 seconds)
+- Shadow DOM detection with multiple selector strategies for reliable widget button activation
 - All UI elements now harmonized with SER AGRO agricultural green palette
 - Optimized button spacing: WhatsApp and Mavilda buttons now separated by only 10px (half centimeter) for compact layout
-- Improved Vapi widget activation with shadow DOM detection and automatic click triggering
+- Cache-busting version: v=1760194252

@@ -488,20 +488,52 @@
             vapiWidget.style.visibility = 'visible';
             vapiWidget.style.opacity = '1';
             
-            // Intentar múltiples métodos para abrir el widget
-            setTimeout(() => {
-                // Método 1: Click en el botón dentro del shadow DOM
-                const vapiButton = vapiWidget.shadowRoot?.querySelector('button');
-                if (vapiButton) {
-                    vapiButton.click();
-                } else {
-                    // Método 2: Buscar cualquier botón en el shadow DOM
-                    const allButtons = vapiWidget.shadowRoot?.querySelectorAll('button');
-                    if (allButtons && allButtons.length > 0) {
-                        allButtons[0].click();
+            // Función para intentar activar el widget
+            function tryActivateVapi(attempts = 0) {
+                if (attempts > 20) return; // Máximo 10 segundos de intentos
+                
+                setTimeout(() => {
+                    // Intentar encontrar y hacer clic en el botón del widget
+                    const shadowRoot = vapiWidget.shadowRoot;
+                    if (shadowRoot) {
+                        // Buscar botón de inicio específico
+                        let startButton = shadowRoot.querySelector('[data-vapi-start-button]') ||
+                                        shadowRoot.querySelector('.vapi-start-button') ||
+                                        shadowRoot.querySelector('button[aria-label*="start"]') ||
+                                        shadowRoot.querySelector('button[aria-label*="Start"]') ||
+                                        shadowRoot.querySelector('button[class*="start"]') ||
+                                        shadowRoot.querySelector('button[class*="cta"]');
+                        
+                        // Si no encontró botón específico, buscar cualquier botón visible
+                        if (!startButton) {
+                            const allButtons = shadowRoot.querySelectorAll('button');
+                            for (let btn of allButtons) {
+                                const style = window.getComputedStyle(btn);
+                                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                                    startButton = btn;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (startButton) {
+                            console.log('🎤 Activando widget de Vapi automáticamente...');
+                            startButton.click();
+                            
+                            // Doble clic por si acaso
+                            setTimeout(() => startButton.click(), 100);
+                        } else {
+                            // Si no encontró el botón, seguir intentando
+                            tryActivateVapi(attempts + 1);
+                        }
+                    } else {
+                        tryActivateVapi(attempts + 1);
                     }
-                }
-            }, 500);
+                }, 500);
+            }
+            
+            // Iniciar intentos de activación
+            tryActivateVapi(0);
         });
 
         // Opción TEXTO
