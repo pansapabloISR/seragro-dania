@@ -130,3 +130,12 @@ Preferred communication style: Simple, everyday language.
 - Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)
 - WhatsApp button repositioned above all widgets (desktop: 180px, mobile: 170px) to prevent overlap
 - All widgets fully accessible across all breakpoints with overflow-y: auto for scroll support
+
+### Design System Update (October 11, 2025)
+- Updated all Mavilda widgets to match website's green color scheme
+- Modal buttons: Green gradient (#2E7D32 to #1B5E20) replacing previous teal/purple
+- Chat header: Green gradient matching brand colors
+- User messages: Green gradient for consistency
+- Input focus and send button: Green theme throughout
+- Voice assistant: Auto-activates Vapi widget when selected (no intermediate button)
+- All UI elements now harmonized with SER AGRO agricultural green palette

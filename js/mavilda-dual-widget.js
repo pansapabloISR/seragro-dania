@@ -184,23 +184,23 @@
             }
 
             #mavilda-voice-btn {
-                background: linear-gradient(135deg, #14B8A6 0%, #0d9488 100%);
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
                 color: white;
             }
 
             #mavilda-voice-btn:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 12px rgba(20, 184, 166, 0.4);
+                box-shadow: 0 6px 12px rgba(46, 125, 50, 0.4);
             }
 
             #mavilda-text-btn {
-                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
                 color: white;
             }
 
             #mavilda-text-btn:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 12px rgba(99, 102, 241, 0.4);
+                box-shadow: 0 6px 12px rgba(46, 125, 50, 0.4);
             }
 
             .mavilda-close-modal {
@@ -238,7 +238,7 @@
             }
 
             .mavilda-chat-header {
-                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
                 color: white;
                 padding: 20px;
                 display: flex;
@@ -304,7 +304,7 @@
             }
 
             .mavilda-message.user {
-                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
                 color: white;
                 margin-left: auto;
                 border-bottom-right-radius: 4px;
@@ -337,15 +337,15 @@
             }
 
             #mavilda-input:focus {
-                border-color: #6366f1;
-                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+                border-color: ${CONFIG.primaryColor};
+                box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
             }
 
             .mavilda-send-btn {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+                background: linear-gradient(135deg, ${CONFIG.primaryColor} 0%, ${CONFIG.secondaryColor} 100%);
                 border: none;
                 cursor: pointer;
                 display: flex;
@@ -479,15 +479,19 @@
             mainButton.style.display = 'flex';
         });
 
-        // Opción VOZ
+        // Opción VOZ - Abrir directamente el widget Vapi
         voiceBtn.addEventListener('click', () => {
             modal.style.display = 'none';
+            
+            // Mostrar el widget y activarlo automáticamente
             vapiWidget.style.display = 'block';
-
+            
             setTimeout(() => {
                 const vapiButton = vapiWidget.shadowRoot?.querySelector('button');
-                if (vapiButton) vapiButton.click();
-            }, 500);
+                if (vapiButton) {
+                    vapiButton.click();
+                }
+            }, 300);
         });
 
         // Opción TEXTO
