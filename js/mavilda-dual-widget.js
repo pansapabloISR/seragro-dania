@@ -483,68 +483,151 @@
         voiceBtn.addEventListener('click', () => {
             console.log('🎯 Click en Asistente de Voz detectado');
             modal.style.display = 'none';
-            
+
             // Mostrar el widget y activarlo automáticamente
             vapiWidget.style.display = 'block';
             vapiWidget.style.visibility = 'visible';
             vapiWidget.style.opacity = '1';
-            
-            console.log('🔍 Iniciando búsqueda de botón Vapi...');
-            
-            // Función rápida para intentar activar el widget INMEDIATAMENTE
+
+            console.log('🔍 Iniciando búsqueda y activación de botón Vapi...');
+
+            // Función ULTRA AGRESIVA para activar el widget INMEDIATAMENTE
             function tryActivateVapi(attempts = 0) {
-                if (attempts > 100) {
-                    console.log('❌ No se pudo activar automáticamente después de 100 intentos');
+                if (attempts > 150) {
+                    console.log('❌ No se pudo activar automáticamente después de 150 intentos');
                     return;
                 }
-                
-                const delay = attempts === 0 ? 0 : 50; // Primer intento inmediato, luego cada 50ms
-                
+
+                const delay = attempts === 0 ? 0 : 30; // Primer intento inmediato, luego cada 30ms (más rápido)
+
                 setTimeout(() => {
                     const shadowRoot = vapiWidget.shadowRoot;
                     if (shadowRoot) {
-                        // Buscar botón de inicio con múltiples selectores
-                        let startButton = shadowRoot.querySelector('[data-vapi-start-button]') ||
-                                        shadowRoot.querySelector('.vapi-start-button') ||
-                                        shadowRoot.querySelector('button[aria-label*="start"]') ||
-                                        shadowRoot.querySelector('button[aria-label*="Start"]') ||
-                                        shadowRoot.querySelector('button[class*="start"]') ||
-                                        shadowRoot.querySelector('button[class*="cta"]') ||
-                                        shadowRoot.querySelector('button[class*="Call"]') ||
-                                        shadowRoot.querySelector('button[class*="call"]');
-                        
-                        // Si no encontró botón específico, buscar cualquier botón visible
+                        console.log(`🔎 Intento ${attempts + 1}: Buscando botón en Shadow DOM...`);
+
+                        // ESTRATEGIA 1: Buscar botones específicos de Vapi
+                        let startButton = shadowRoot.querySelector('button[class*="start"]') ||
+                            shadowRoot.querySelector('button[class*="Start"]') ||
+                            shadowRoot.querySelector('button[class*="cta"]') ||
+                            shadowRoot.querySelector('button[class*="CTA"]') ||
+                            shadowRoot.querySelector('button[class*="call"]') ||
+                            shadowRoot.querySelector('button[class*="Call"]') ||
+                            shadowRoot.querySelector('button[data-vapi]') ||
+                            shadowRoot.querySelector('[role="button"]');
+
+                        // ESTRATEGIA 2: Si no encontró, buscar CUALQUIER botón visible en el widget
                         if (!startButton) {
+                            console.log('🔎 Estrategia 2: Buscando cualquier botón visible...');
                             const allButtons = shadowRoot.querySelectorAll('button');
+                            console.log(`📍 Botones encontrados: ${allButtons.length}`);
+
                             for (let btn of allButtons) {
                                 const style = window.getComputedStyle(btn);
-                                const text = btn.textContent.toLowerCase();
-                                // Buscar botón que contenga palabras clave
-                                if ((style.display !== 'none' && style.visibility !== 'hidden') &&
-                                    (text.includes('start') || text.includes('comenzar') || text.includes('call') || text === '')) {
-                                    startButton = btn;
+                                const rect = btn.getBoundingClientRect();
+                                const text = btn.textContent.toLowerCase().trim();
+
+                                console.log(`🔍 Botón: "${text}" - display: ${style.display}, visibility: ${style.visibility}, width: ${rect.width}px`);
+
+                                // Botón debe ser visible y tener tamaño
+                                if (style.display !== 'none' &&
+                                    style.visibility !== 'hidden' &&
+                                    rect.width > 0 &&
+                                    rect.height > 0) {
+
+                                    // Priorizar botones con texto relevante o sin texto (iconos)
+                                    if (text.includes('start') ||
+                                        text.includes('comenzar') ||
+                                        text.includes('call') ||
+                                        text.includes('iniciar') ||
+                                        text === '' ||
+                                        text.length < 3) {
+                                        startButton = btn;
+                                        console.log(`✅ Botón candidato encontrado: "${text}"`);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        // ESTRATEGIA 3: Si aún no encontró, buscar elementos clickeables
+                        if (!startButton) {
+                            console.log('🔎 Estrategia 3: Buscando elementos clickeables...');
+                            const clickableElements = shadowRoot.querySelectorAll('[onclick], a, div[role="button"], span[role="button"]');
+                            for (let el of clickableElements) {
+                                const style = window.getComputedStyle(el);
+                                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                                    startButton = el;
+                                    console.log('✅ Elemento clickeable encontrado');
                                     break;
                                 }
                             }
                         }
-                        
+
                         if (startButton) {
-                            console.log('🎤 Activando Vapi instantáneamente (intento ' + attempts + ')');
-                            // Triple click para asegurar activación
-                            startButton.click();
-                            setTimeout(() => startButton.click(), 10);
-                            setTimeout(() => startButton.click(), 20);
+                            console.log('🎤 ¡BOTÓN ENCONTRADO! Activando Vapi (intento ' + (attempts + 1) + ')');
+
+                            // MÚLTIPLES ESTRATEGIAS DE CLICK para asegurar activación
+
+                            // 1. Click directo (x5 para máxima seguridad)
+                            for (let i = 0; i < 5; i++) {
+                                setTimeout(() => {
+                                    startButton.click();
+                                    console.log(`💥 Click directo ${i + 1}`);
+                                }, i * 5);
+                            }
+
+                            // 2. Disparar eventos de mouse
+                            setTimeout(() => {
+                                ['mousedown', 'mouseup', 'click'].forEach(eventType => {
+                                    const event = new MouseEvent(eventType, {
+                                        bubbles: true,
+                                        cancelable: true,
+                                        view: window
+                                    });
+                                    startButton.dispatchEvent(event);
+                                    console.log(`🖱️ Evento ${eventType} disparado`);
+                                });
+                            }, 30);
+
+                            // 3. Disparar eventos de pointer
+                            setTimeout(() => {
+                                ['pointerdown', 'pointerup'].forEach(eventType => {
+                                    const event = new PointerEvent(eventType, {
+                                        bubbles: true,
+                                        cancelable: true
+                                    });
+                                    startButton.dispatchEvent(event);
+                                    console.log(`👆 Evento ${eventType} disparado`);
+                                });
+                            }, 50);
+
+                            // 4. Focus + Enter key
+                            setTimeout(() => {
+                                startButton.focus();
+                                const enterEvent = new KeyboardEvent('keydown', {
+                                    key: 'Enter',
+                                    code: 'Enter',
+                                    keyCode: 13,
+                                    bubbles: true
+                                });
+                                startButton.dispatchEvent(enterEvent);
+                                console.log('⌨️ Tecla Enter simulada');
+                            }, 70);
+
+                            console.log('🎉 Activación múltiple completada');
                             return; // Éxito, salir
                         } else {
-                            // Si no encontró el botón, seguir intentando rápidamente
+                            // Si no encontró el botón, seguir intentando
+                            console.log(`⏳ Botón no encontrado en intento ${attempts + 1}, reintentando...`);
                             tryActivateVapi(attempts + 1);
                         }
                     } else {
+                        console.log(`⏳ Shadow DOM no disponible en intento ${attempts + 1}`);
                         tryActivateVapi(attempts + 1);
                     }
                 }, delay);
             }
-            
+
             // Iniciar intentos de activación INMEDIATA
             tryActivateVapi(0);
         });
