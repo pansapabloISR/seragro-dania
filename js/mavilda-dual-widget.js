@@ -488,28 +488,34 @@
             vapiWidget.style.visibility = 'visible';
             vapiWidget.style.opacity = '1';
             
-            // Función para intentar activar el widget
+            // Función rápida para intentar activar el widget INMEDIATAMENTE
             function tryActivateVapi(attempts = 0) {
-                if (attempts > 20) return; // Máximo 10 segundos de intentos
+                if (attempts > 100) return; // Máximo 5 segundos de intentos rápidos
+                
+                const delay = attempts === 0 ? 0 : 50; // Primer intento inmediato, luego cada 50ms
                 
                 setTimeout(() => {
-                    // Intentar encontrar y hacer clic en el botón del widget
                     const shadowRoot = vapiWidget.shadowRoot;
                     if (shadowRoot) {
-                        // Buscar botón de inicio específico
+                        // Buscar botón de inicio con múltiples selectores
                         let startButton = shadowRoot.querySelector('[data-vapi-start-button]') ||
                                         shadowRoot.querySelector('.vapi-start-button') ||
                                         shadowRoot.querySelector('button[aria-label*="start"]') ||
                                         shadowRoot.querySelector('button[aria-label*="Start"]') ||
                                         shadowRoot.querySelector('button[class*="start"]') ||
-                                        shadowRoot.querySelector('button[class*="cta"]');
+                                        shadowRoot.querySelector('button[class*="cta"]') ||
+                                        shadowRoot.querySelector('button[class*="Call"]') ||
+                                        shadowRoot.querySelector('button[class*="call"]');
                         
                         // Si no encontró botón específico, buscar cualquier botón visible
                         if (!startButton) {
                             const allButtons = shadowRoot.querySelectorAll('button');
                             for (let btn of allButtons) {
                                 const style = window.getComputedStyle(btn);
-                                if (style.display !== 'none' && style.visibility !== 'hidden') {
+                                const text = btn.textContent.toLowerCase();
+                                // Buscar botón que contenga palabras clave
+                                if ((style.display !== 'none' && style.visibility !== 'hidden') &&
+                                    (text.includes('start') || text.includes('comenzar') || text.includes('call') || text === '')) {
                                     startButton = btn;
                                     break;
                                 }
@@ -517,22 +523,23 @@
                         }
                         
                         if (startButton) {
-                            console.log('🎤 Activando widget de Vapi automáticamente...');
+                            console.log('🎤 Activando Vapi instantáneamente (intento ' + attempts + ')');
+                            // Triple click para asegurar activación
                             startButton.click();
-                            
-                            // Doble clic por si acaso
-                            setTimeout(() => startButton.click(), 100);
+                            setTimeout(() => startButton.click(), 10);
+                            setTimeout(() => startButton.click(), 20);
+                            return; // Éxito, salir
                         } else {
-                            // Si no encontró el botón, seguir intentando
+                            // Si no encontró el botón, seguir intentando rápidamente
                             tryActivateVapi(attempts + 1);
                         }
                     } else {
                         tryActivateVapi(attempts + 1);
                     }
-                }, 500);
+                }, delay);
             }
             
-            // Iniciar intentos de activación
+            // Iniciar intentos de activación INMEDIATA
             tryActivateVapi(0);
         });
 

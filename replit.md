@@ -138,9 +138,14 @@ Preferred communication style: Simple, everyday language.
 - User messages: Green gradient for consistency
 - Input focus and send button: Green theme throughout
 - Voice assistant icon changed from microphone 🎤 to phone 📞 for better clarity
-- Voice assistant: Auto-activates Vapi widget when selected (enhanced with multiple activation methods)
-- Implemented advanced auto-activation system for Vapi widget with recursive retry logic (up to 10 seconds)
+- Voice assistant: Auto-activates Vapi widget when selected (enhanced with INSTANT activation)
+- Implemented ultra-fast auto-activation system for Vapi widget:
+  - First attempt: IMMEDIATE (0ms delay) to skip loading screen
+  - Subsequent attempts: every 50ms (10x faster than before)
+  - Triple-click activation for reliability
+  - 100 attempts over 5 seconds maximum
+  - Eliminates intermediate loading screen for seamless UX
 - Shadow DOM detection with multiple selector strategies for reliable widget button activation
 - All UI elements now harmonized with SER AGRO agricultural green palette
 - Optimized button spacing: WhatsApp and Mavilda buttons now separated by only 10px (half centimeter) for compact layout
-- Cache-busting version: v=1760194252
+- Cache-busting version: v=1760194754
