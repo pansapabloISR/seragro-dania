@@ -34,7 +34,7 @@
                 <div class="mavilda-modal-content">
                     <h3>¿Cómo querés comunicarte?</h3>
                     <button id="mavilda-voice-btn" class="mavilda-option-btn">
-                        <span class="mavilda-icon">🎤</span>
+                        <span class="mavilda-icon">📞</span>
                         <span>Asistente de Voz</span>
                     </button>
                     <button id="mavilda-text-btn" class="mavilda-option-btn">
