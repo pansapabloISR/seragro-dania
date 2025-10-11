@@ -481,6 +481,7 @@
 
         // Opción VOZ - Abrir directamente el widget Vapi
         voiceBtn.addEventListener('click', () => {
+            console.log('🎯 Click en Asistente de Voz detectado');
             modal.style.display = 'none';
             
             // Mostrar el widget y activarlo automáticamente
@@ -488,9 +489,14 @@
             vapiWidget.style.visibility = 'visible';
             vapiWidget.style.opacity = '1';
             
+            console.log('🔍 Iniciando búsqueda de botón Vapi...');
+            
             // Función rápida para intentar activar el widget INMEDIATAMENTE
             function tryActivateVapi(attempts = 0) {
-                if (attempts > 100) return; // Máximo 5 segundos de intentos rápidos
+                if (attempts > 100) {
+                    console.log('❌ No se pudo activar automáticamente después de 100 intentos');
+                    return;
+                }
                 
                 const delay = attempts === 0 ? 0 : 50; // Primer intento inmediato, luego cada 50ms
                 
