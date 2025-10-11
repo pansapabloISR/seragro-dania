@@ -16,7 +16,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() {dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'AW-17289441166');
     </script>
 </head>
@@ -215,9 +214,9 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <h4>Whatsapp</h4>
-                    <p><a
-                            href="https://api.whatsapp.com/send?phone=5493465432688&text=Hola%2C+vengo+desde+el+sitio+de+SER+AGRO">+54
-                            (93465) 432688</a></p>
+                    <p>
+                        href="https://api.whatsapp.com/send?phone=5493465432688&text=Hola%2C+vengo+desde+el+sitio+de+SER+AGRO">+54
+                        (93465) 432688</a></p>
                 </div>
                 <div class="contact-item">
                     <h4>Email</h4>
@@ -298,32 +297,13 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="main-app.js?v=1760119657"></script>
-    <!-- Chat Widget Mavilda -->
-    <script src="js/mavilda-chat.js?v=1760119657"></script>
-    
-    <!-- Vapi Widget -->
-    <vapi-widget
-      public-key="5a29292f-d9cc-4a21-bb7e-ff8df74763cd"
-      assistant-id="776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4"
-      mode="voice"
-      theme="dark"
-      base-bg-color="#000000"
-      accent-color="#14B8A6"
-      cta-button-color="#000000"
-      cta-button-text-color="#ffffff"
-      border-radius="large"
-      size="full"
-      position="bottom-right"
-      title="Si quieres hablar con Mavilda"
-      start-button-text="Start"
-      end-button-text="End Call"
-      chat-first-message="Hey, How can I help you today?"
-      chat-placeholder="Type your message..."
-      voice-show-transcript="true"
-      consent-required="false"
-    ></vapi-widget>
-    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+
+    <!-- 🔴 NUEVO: Widget Dual (Voz/Texto) con Vapi -->
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async
+        type="text/javascript"></script>
+    <script src="js/mavilda-dual-widget.js?v=1760119657"></script>
 </body>
 
 </html>
