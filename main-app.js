@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     whatsappButton.className = "whatsapp-float-button";
     whatsappButton.style.cssText = `
         position: fixed;
-        bottom: 180px;
+        bottom: 110px;
         right: 40px;
         background: #25D366;
         color: white;
@@ -198,10 +198,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Ajustar posición del botón WhatsApp en móviles
     function adjustWhatsAppButton() {
         if (window.innerWidth <= 480) {
-            whatsappButton.style.bottom = '170px';
+            whatsappButton.style.bottom = '100px';
             whatsappButton.style.right = '50px';
         } else {
-            whatsappButton.style.bottom = '180px';
+            whatsappButton.style.bottom = '110px';
             whatsappButton.style.right = '40px';
         }
     }
