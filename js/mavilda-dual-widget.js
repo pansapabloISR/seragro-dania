@@ -485,13 +485,23 @@
             
             // Mostrar el widget y activarlo automáticamente
             vapiWidget.style.display = 'block';
+            vapiWidget.style.visibility = 'visible';
+            vapiWidget.style.opacity = '1';
             
+            // Intentar múltiples métodos para abrir el widget
             setTimeout(() => {
+                // Método 1: Click en el botón dentro del shadow DOM
                 const vapiButton = vapiWidget.shadowRoot?.querySelector('button');
                 if (vapiButton) {
                     vapiButton.click();
+                } else {
+                    // Método 2: Buscar cualquier botón en el shadow DOM
+                    const allButtons = vapiWidget.shadowRoot?.querySelectorAll('button');
+                    if (allButtons && allButtons.length > 0) {
+                        allButtons[0].click();
+                    }
                 }
-            }, 300);
+            }, 500);
         });
 
         // Opción TEXTO
