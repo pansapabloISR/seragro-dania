@@ -53,7 +53,7 @@ Preferred communication style: Simple, everyday language.
   - Consent: not required
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
-  - Positioned 10px above Mavilda button (desktop: 110px, mobile: 100px) for tight spacing
+  - Positioned above all other widgets (desktop: 180px from bottom, mobile: 170px)
   - Updated phone number: +54 (93465) 432688
 
 ### Styling Approach
@@ -130,22 +130,3 @@ Preferred communication style: Simple, everyday language.
 - Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)
 - WhatsApp button repositioned above all widgets (desktop: 180px, mobile: 170px) to prevent overlap
 - All widgets fully accessible across all breakpoints with overflow-y: auto for scroll support
-
-### Design System Update (October 11, 2025)
-- Updated all Mavilda widgets to match website's green color scheme
-- Modal buttons: Green gradient (#2E7D32 to #1B5E20) replacing previous teal/purple
-- Chat header: Green gradient matching brand colors
-- User messages: Green gradient for consistency
-- Input focus and send button: Green theme throughout
-- Voice assistant icon changed from microphone 🎤 to phone 📞 for better clarity
-- Voice assistant: Auto-activates Vapi widget when selected (enhanced with INSTANT activation)
-- Implemented ultra-fast auto-activation system for Vapi widget:
-  - First attempt: IMMEDIATE (0ms delay) to skip loading screen
-  - Subsequent attempts: every 50ms (10x faster than before)
-  - Triple-click activation for reliability
-  - 100 attempts over 5 seconds maximum
-  - Eliminates intermediate loading screen for seamless UX
-- Shadow DOM detection with multiple selector strategies for reliable widget button activation
-- All UI elements now harmonized with SER AGRO agricultural green palette
-- Optimized button spacing: WhatsApp and Mavilda buttons now separated by only 10px (half centimeter) for compact layout
-- Cache-busting version: v=1760194754
