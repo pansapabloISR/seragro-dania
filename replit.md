@@ -47,9 +47,13 @@ Preferred communication style: Simple, everyday language.
   - Assistant ID: 776543a0-f4a2-4ed7-ad7a-f1fe0f6fd4d4
   - Positioned at the bottom-right corner (lowest position)
   - Desktop: 20px from bottom, Mobile: 15px from bottom
-  - Title: "Si quieres hablar con Mavilda"
-  - Size: full, Border radius: large
-  - Dark theme with teal accent (#14B8A6)
+  - Title: "Hablar con Mavilda"
+  - CTA Title: "Ingeniera Agrónoma "
+  - Size: compact, Border radius: large
+  - Dark theme with green accent (#14b816)
+  - Start button: "Comenzar", End button: "Finalizar"
+  - Chat first message: "Hey, How can I help you today?"
+  - Voice transcript enabled
   - Consent: not required
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
