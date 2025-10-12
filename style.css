@@ -1937,21 +1937,54 @@ vapi-widget {
    OCULTAR TEXTOS DEL WIDGET DE VAPI
    ================================================ */
 
+/* Clases específicas de Vapi para instrucciones - CSS global */
+.vapi-btn-instructions,
+.vapi-instructions,
+.vapi-hint-text,
+.vapi-instruction-text,
+.vapi-subtitle,
+.vapi-message,
+div[class*="vapi"][class*="instruction"],
+div[class*="vapi"][class*="subtitle"],
+div[class*="vapi"][class*="hint"],
+span[class*="vapi"][class*="instruction"],
+span[class*="vapi"][class*="subtitle"],
+p[class*="instruction"],
+p[class*="subtitle"],
+p[class*="hint"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    max-height: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
 /* Ocultar el texto "Click the microphone to start" y similares */
 vapi-widget::part(instruction-text),
 vapi-widget::part(subtitle),
 vapi-widget::part(message),
 vapi-widget [class*="instruction"],
 vapi-widget [class*="subtitle"],
-vapi-widget [class*="message"] {
+vapi-widget [class*="message"],
+vapi-widget [class*="hint"] {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
 }
 
 /* Ocultar el botón "End Chat" */
+.vapi-end-chat,
+.vapi-end-button,
 vapi-widget::part(end-chat-button),
 vapi-widget [class*="end-chat"],
+vapi-widget [class*="end-button"],
 vapi-widget [aria-label*="End"],
 vapi-widget [aria-label*="end"] {
     display: none !important;
