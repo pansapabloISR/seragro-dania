@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <meta http-equiv=1760299395"Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv=1760299395"Pragma" content="no-cache">
+    <meta http-equiv=1760299395"Expires" content="0">
     <title>SER AGRO - Soluciones de drones para el sector agropecuario</title>
-    <link rel="stylesheet" href="style.css?v=1760298697">
+    <link rel="stylesheet" href="style.css?v=1760299395">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17289441166"></script>
@@ -298,9 +298,9 @@
         </div>
     </footer>
 
-    <script src="main-app.js?v=1760298697"></script>
+    <script src="main-app.js?v=1760299395"></script>
     <!-- Chat Widget Mavilda -->
-    <script src="js/mavilda-chat.js?v=1760298697"></script>
+    <script src="js/mavilda-chat.js?v=1760299395"></script>
     
     <!-- Vapi Widget -->
     <vapi-widget
@@ -325,6 +325,60 @@
       consent-required="false"
     ></vapi-widget>
     <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+    
+    <!-- Script para limpiar textos molestos del widget de Vapi -->
+    <script>
+    (function() {
+        // Esperar a que el widget de Vapi se cargue
+        function cleanVapiWidget() {
+            const vapiWidget = document.querySelector('vapi-widget');
+            if (!vapiWidget) {
+                setTimeout(cleanVapiWidget, 100);
+                return;
+            }
+
+            // Intentar acceder al shadow root
+            const shadowRoot = vapiWidget.shadowRoot;
+            if (shadowRoot) {
+                // Ocultar textos de instrucción
+                const instructionTexts = shadowRoot.querySelectorAll('[class*="instruction"], [class*="subtitle"], [class*="message"], [class*="text"]');
+                instructionTexts.forEach(el => {
+                    if (el.textContent.includes('Click') || el.textContent.includes('microphone') || el.textContent.includes('start')) {
+                        el.style.display = 'none';
+                        el.style.opacity = '0';
+                        el.style.visibility = 'hidden';
+                    }
+                });
+
+                // Ocultar botón "End Chat"
+                const endChatButtons = shadowRoot.querySelectorAll('button, [role="button"], [class*="end"], [class*="chat"]');
+                endChatButtons.forEach(el => {
+                    if (el.textContent.includes('End') || el.textContent.includes('Chat') || el.getAttribute('aria-label')?.includes('End')) {
+                        el.style.display = 'none';
+                        el.style.opacity = '0';
+                        el.style.visibility = 'hidden';
+                    }
+                });
+
+                // Observar cambios en el DOM del widget
+                const observer = new MutationObserver(() => {
+                    cleanVapiWidget();
+                });
+                observer.observe(shadowRoot, { childList: true, subtree: true });
+            } else {
+                // Intentar de nuevo si no hay shadow root aún
+                setTimeout(cleanVapiWidget, 100);
+            }
+        }
+
+        // Ejecutar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', cleanVapiWidget);
+        } else {
+            cleanVapiWidget();
+        }
+    })();
+    </script>
 </body>
 
 </html>

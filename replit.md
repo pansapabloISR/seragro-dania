@@ -55,6 +55,10 @@ Preferred communication style: Simple, everyday language.
   - Chat first message: "Hey, How can I help you today?"
   - Voice transcript enabled
   - Consent: not required
+  - **UI Cleanup**: Textos innecesarios ocultos con CSS y JavaScript
+    - "Click the microphone to start" eliminado
+    - Botón "End Chat" oculto
+    - Shadow DOM manipulado para interfaz limpia
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
   - Positioned above all other widgets (desktop: 180px from bottom, mobile: 170px)

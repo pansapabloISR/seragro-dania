@@ -1932,3 +1932,36 @@ vapi-widget {
         overflow-y: auto !important;
     }
 }
+
+/* ================================================
+   OCULTAR TEXTOS DEL WIDGET DE VAPI
+   ================================================ */
+
+/* Ocultar el texto "Click the microphone to start" y similares */
+vapi-widget::part(instruction-text),
+vapi-widget::part(subtitle),
+vapi-widget::part(message),
+vapi-widget [class*="instruction"],
+vapi-widget [class*="subtitle"],
+vapi-widget [class*="message"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Ocultar el botón "End Chat" */
+vapi-widget::part(end-chat-button),
+vapi-widget [class*="end-chat"],
+vapi-widget [aria-label*="End"],
+vapi-widget [aria-label*="end"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Estilos adicionales para limpiar la interfaz del widget */
+vapi-widget {
+    --vapi-instruction-display: none;
+    --vapi-subtitle-display: none;
+    --vapi-end-chat-display: none;
+}
