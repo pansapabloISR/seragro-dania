@@ -323,60 +323,103 @@
       chat-placeholder="Type your message..."
       voice-show-transcript="true"
       consent-required="false"
+      empty-voice-message="Haga clic en el micrófono para comenzar."
     ></vapi-widget>
     <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
     
-    <!-- Script para limpiar textos molestos del widget de Vapi -->
+    <!-- Script para traducir y limpiar el widget de Vapi -->
     <script>
     (function() {
-        // Esperar a que el widget de Vapi se cargue
-        function cleanVapiWidget() {
+        // Traducciones de inglés a español
+        const translations = {
+            'Click the microphone to start': 'Haga clic en el micrófono para comenzar',
+            'Click the start button to begin a conversation': 'Haga clic en el botón de inicio para comenzar una conversación',
+            'Click to start': 'Haga clic para comenzar',
+            'Tap to start': 'Toca para comenzar',
+            'End Chat': '',
+            'End Call': 'Finalizar'
+        };
+
+        let observerInstance = null;
+
+        function translateAndCleanVapiWidget() {
             const vapiWidget = document.querySelector('vapi-widget');
             if (!vapiWidget) {
-                setTimeout(cleanVapiWidget, 100);
+                setTimeout(translateAndCleanVapiWidget, 100);
                 return;
             }
 
-            // Intentar acceder al shadow root
             const shadowRoot = vapiWidget.shadowRoot;
             if (shadowRoot) {
-                // Ocultar textos de instrucción
-                const instructionTexts = shadowRoot.querySelectorAll('[class*="instruction"], [class*="subtitle"], [class*="message"], [class*="text"]');
-                instructionTexts.forEach(el => {
-                    if (el.textContent.includes('Click') || el.textContent.includes('microphone') || el.textContent.includes('start')) {
-                        el.style.display = 'none';
-                        el.style.opacity = '0';
-                        el.style.visibility = 'hidden';
+                // Traducir todos los textos del widget
+                const allTextElements = shadowRoot.querySelectorAll('*');
+                allTextElements.forEach(el => {
+                    // Verificar nodos de texto directos
+                    el.childNodes.forEach(node => {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            const text = node.textContent.trim();
+                            if (translations[text]) {
+                                node.textContent = translations[text];
+                            }
+                        }
+                    });
+
+                    // Traducir atributos aria-label y title
+                    const ariaLabel = el.getAttribute('aria-label');
+                    if (ariaLabel && translations[ariaLabel]) {
+                        el.setAttribute('aria-label', translations[ariaLabel]);
+                    }
+                    const title = el.getAttribute('title');
+                    if (title && translations[title]) {
+                        el.setAttribute('title', translations[title]);
                     }
                 });
 
-                // Ocultar botón "End Chat"
-                const endChatButtons = shadowRoot.querySelectorAll('button, [role="button"], [class*="end"], [class*="chat"]');
+                // Ocultar específicamente el botón "End Chat"
+                const endChatButtons = shadowRoot.querySelectorAll('button, [role="button"]');
                 endChatButtons.forEach(el => {
-                    if (el.textContent.includes('End') || el.textContent.includes('Chat') || el.getAttribute('aria-label')?.includes('End')) {
-                        el.style.display = 'none';
+                    const text = el.textContent.trim();
+                    const ariaLabel = el.getAttribute('aria-label');
+                    
+                    if (text === 'End Chat' || ariaLabel === 'End Chat' || 
+                        text.includes('End Chat') || ariaLabel?.includes('End Chat')) {
+                        el.style.display = 'none !important';
                         el.style.opacity = '0';
                         el.style.visibility = 'hidden';
+                        el.style.pointerEvents = 'none';
+                        el.setAttribute('hidden', 'true');
                     }
                 });
 
-                // Observar cambios en el DOM del widget
-                const observer = new MutationObserver(() => {
-                    cleanVapiWidget();
-                });
-                observer.observe(shadowRoot, { childList: true, subtree: true });
+                // Configurar MutationObserver si no existe
+                if (!observerInstance) {
+                    observerInstance = new MutationObserver((mutations) => {
+                        mutations.forEach(() => {
+                            translateAndCleanVapiWidget();
+                        });
+                    });
+                    observerInstance.observe(shadowRoot, { 
+                        childList: true, 
+                        subtree: true,
+                        characterData: true,
+                        attributes: true
+                    });
+                }
             } else {
-                // Intentar de nuevo si no hay shadow root aún
-                setTimeout(cleanVapiWidget, 100);
+                setTimeout(translateAndCleanVapiWidget, 100);
             }
         }
 
         // Ejecutar cuando el DOM esté listo
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', cleanVapiWidget);
+            document.addEventListener('DOMContentLoaded', translateAndCleanVapiWidget);
         } else {
-            cleanVapiWidget();
+            translateAndCleanVapiWidget();
         }
+
+        // Re-ejecutar después de que el script de Vapi se cargue
+        setTimeout(translateAndCleanVapiWidget, 1000);
+        setTimeout(translateAndCleanVapiWidget, 2000);
     })();
     </script>
 </body>
