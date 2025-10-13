@@ -1,55 +1,13 @@
+run = "npx serve -s . -l 3000"
 entrypoint = "index.html"
-modules = ["web", "python-3.11"]
+modules = ["nodejs-20"]
 
 [nix]
-channel = "stable-24_11"
-packages = ["static-web-server"]
-
-[deployment]
-publicDir = "/"
-deploymentTarget = "autoscale"
-run = ["python3", "server.py"]
-
-[workflows]
-runButton = "Project"
-
-[[workflows.workflow]]
-name = "Server"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "python3 server.py"
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
-
-[[workflows.workflow]]
-name = "Server"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "python3 server.py"
-waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
-
-[[ports]]
-localPort = 80
-externalPort = 80
+channel = "stable-23_11"
 
 [[ports]]
 localPort = 3000
-externalPort = 3000
-
-[[ports]]
-localPort = 5000
-externalPort = 5000
+externalPort = 80
 
 [agent]
 expertMode = true
