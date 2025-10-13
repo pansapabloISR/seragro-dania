@@ -9,14 +9,16 @@ SER AGRO is a corporate website for an agricultural drone distributor specializi
 Preferred communication style: Simple, everyday language.
 
 ### Critical Configuration Rules
-- **⚠️ NEVER recreate workflows using `workflows_set_run_config_tool`** - this overwrites port mappings
-- **Port Configuration**: Internal port 5000 MUST map to external port 5000 (not :80)
-  - **CRITICAL**: Configure in Replit Networking tool: Internal Port 5000 → External Port 5000
+- **Port Configuration**: Internal port 5000 MUST be used for the web server
   - Server runs on port 5000 internally (server.py)
-  - Must be manually configured in Networking settings for preview to work
-  - Always use `restart_workflow` to restart the server, never create new workflows
-  - Port mapping is saved in `.replit` file (lines 46-47: `localPort = 5000, externalPort = 5000`)
-- **Workflow Management**: Only use `restart_workflow("Server")` to restart - NEVER use `workflows_set_run_config_tool`
+  - Command: `python3 server.py`
+  - Port mapping configured in `.replit` file (localPort = 5000, externalPort = 5000)
+- **Workflow Management**: 
+  - Workflow name: "Server"
+  - Command: `python3 server.py`
+  - Wait for port: 5000
+  - Output type: webview
+  - Use `restart_workflow("Server")` to restart the server when needed
 
 ## System Architecture
 
@@ -103,6 +105,13 @@ Preferred communication style: Simple, everyday language.
 - Physical Location: Omar Carrasco 2776, Rosario, Argentina
 
 ## Recent Changes (October 2025)
+
+### Port Configuration Fix (October 13, 2025)
+- Verified and confirmed port 5000 configuration across entire project
+- Server properly configured to run on port 5000 (required by Replit)
+- No JavaScript files make local port calls (only external APIs)
+- Workflow "Server" running correctly with command: `python3 server.py`
+- Cache-Control headers working correctly (no-cache, no-store, must-revalidate)
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
