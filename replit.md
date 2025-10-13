@@ -55,10 +55,15 @@ Preferred communication style: Simple, everyday language.
   - Chat first message: "Hey, How can I help you today?"
   - Voice transcript enabled
   - Consent: not required
-  - **UI Cleanup**: Textos innecesarios ocultos con CSS y JavaScript
-    - "Click the microphone to start" eliminado
-    - Botón "End Chat" oculto
-    - Shadow DOM manipulado para interfaz limpia
+  - Empty voice message: "Haga clic en el micrófono para comenzar."
+  - **Localización al Español** (October 13, 2025):
+    - Script JavaScript personalizado para traducir textos del widget
+    - Traducciones implementadas:
+      - "Click the microphone to start" → "Haga clic en el micrófono para comenzar"
+      - "Click the start button to begin a conversation" → "Haga clic en el botón de inicio para comenzar una conversación"
+    - Botón "End Chat" completamente oculto con múltiples técnicas CSS
+    - MutationObserver robusto para mantener traducciones en cambios dinámicos del DOM
+    - Shadow DOM manipulado para interfaz completamente en español
 - **WhatsApp Float Button** (`main-app.js`): Direct contact button
   - Green circular button (#25D366)
   - Positioned above all other widgets (desktop: 180px from bottom, mobile: 170px)
@@ -138,3 +143,15 @@ Preferred communication style: Simple, everyday language.
 - Small screens (≤480px): Mavilda button at 90px, chat window at 150px with height: calc(100vh - 170px)
 - WhatsApp button repositioned above all widgets (desktop: 180px, mobile: 170px) to prevent overlap
 - All widgets fully accessible across all breakpoints with overflow-y: auto for scroll support
+
+### Vapi Widget Spanish Localization (October 13, 2025)
+- Implemented comprehensive Spanish translation system for Vapi widget UI
+- Added `empty-voice-message` attribute with Spanish text: "Haga clic en el micrófono para comenzar."
+- Created custom JavaScript translation script with Shadow DOM manipulation:
+  - Translates "Click the microphone to start" → "Haga clic en el micrófono para comenzar"
+  - Translates "Click the start button to begin a conversation" → "Haga clic en el botón de inicio para comenzar una conversación"
+  - Completely hides "End Chat" button using multiple CSS techniques
+  - Implements robust MutationObserver to maintain translations during dynamic DOM changes
+  - Translates text nodes, aria-label attributes, and title attributes
+- Widget interface now fully localized to Spanish for better user experience
+- Cache version updated to v=1760359575
