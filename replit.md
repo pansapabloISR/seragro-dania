@@ -106,12 +106,18 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
-### Port Configuration Fix (October 13, 2025)
+### Port Configuration Fix & Content Update (October 13, 2025)
 - Verified and confirmed port 5000 configuration across entire project
 - Server properly configured to run on port 5000 (required by Replit)
 - No JavaScript files make local port calls (only external APIs)
 - Workflow "Server" running correctly with command: `python3 server.py`
 - Cache-Control headers working correctly (no-cache, no-store, must-revalidate)
+- **Fixed index.html 404 errors**: Updated all missing image references
+  - Replaced non-existent `LogoSerAgro-02.png` with correct logos (`logo blanco.png`, `logo color pleno.png`)
+  - Corrected product listings: now shows T50, T100, and Mavic 3 Multispectral (previously showed incorrect models T40, T25)
+  - Updated product images to existing files: `T50-Caracteristicas.jpg`, `t100.jpg`, `mav01.jpg`
+  - Fixed product links to point to correct pages: `dji-agras-t50.html`, `DJI-Agras-T100.html`, `dji-mavic-3.html`
+- All pages now load without 404 errors for images or assets
 
 ### JavaScript Architecture Update
 - Renamed `script.js` → `main-app.js` for better cache management
