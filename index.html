@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv=1760360323"Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv=1760360323"Pragma" content="no-cache">
-    <meta http-equiv=1760360323"Expires" content="0">
+    <meta http-equiv=1760360542"Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv=1760360542"Pragma" content="no-cache">
+    <meta http-equiv=1760360542"Expires" content="0">
     <title>SER AGRO - Soluciones de drones para el sector agropecuario</title>
-    <link rel="stylesheet" href="style.css?v=1760360323">
+    <link rel="stylesheet" href="style.css?v=1760360542">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17289441166"></script>
@@ -298,9 +298,9 @@
         </div>
     </footer>
 
-    <script src="main-app.js?v=1760360323"></script>
+    <script src="main-app.js?v=1760360542"></script>
     <!-- Chat Widget Mavilda -->
-    <script src="js/mavilda-chat.js?v=1760360323"></script>
+    <script src="js/mavilda-chat.js?v=1760360542"></script>
     
     <!-- Vapi Widget -->
     <vapi-widget
@@ -327,99 +327,78 @@
     ></vapi-widget>
     <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
     
-    <!-- Script para traducir y limpiar el widget de Vapi -->
+    <!-- Script para ocultar el botón End Chat del widget de Vapi -->
     <script>
     (function() {
-        // Traducciones de inglés a español
-        const translations = {
-            'Click the microphone to start': 'Haga clic en el micrófono para comenzar',
-            'Click the start button to begin a conversation': 'Haga clic en el botón de inicio para comenzar una conversación',
-            'Click to start': 'Haga clic para comenzar',
-            'Tap to start': 'Toca para comenzar',
-            'End Chat': '',
-            'End Call': 'Finalizar'
-        };
+        let attempts = 0;
+        const MAX_ATTEMPTS = 100;
 
-        let observerInstance = null;
-        let translationAttempts = 0;
-        const MAX_ATTEMPTS = 50;
-
-        function translateAndCleanVapiWidget() {
-            translationAttempts++;
+        function hideEndChatButton() {
+            attempts++;
             
             const vapiWidget = document.querySelector('vapi-widget');
-            if (!vapiWidget && translationAttempts < MAX_ATTEMPTS) {
-                setTimeout(translateAndCleanVapiWidget, 200);
+            if (!vapiWidget && attempts < MAX_ATTEMPTS) {
+                setTimeout(hideEndChatButton, 100);
                 return;
             }
 
             const shadowRoot = vapiWidget?.shadowRoot;
             if (shadowRoot) {
-                console.log('🔄 Traduciendo widget de Vapi...');
+                // Buscar y eliminar el botón "End Chat"
+                const allButtons = shadowRoot.querySelectorAll('button, [role="button"], a, div[onclick], span[onclick]');
                 
-                // Traducir todos los textos del widget
-                const allElements = shadowRoot.querySelectorAll('*');
-                allElements.forEach(el => {
-                    // Traducir nodos de texto
-                    el.childNodes.forEach(node => {
-                        if (node.nodeType === Node.TEXT_NODE) {
-                            const originalText = node.textContent.trim();
-                            if (translations.hasOwnProperty(originalText)) {
-                                node.textContent = translations[originalText];
-                                console.log(`✅ Traducido: "${originalText}" → "${translations[originalText]}"`);
-                            }
-                        }
-                    });
-
-                    // Traducir atributos
-                    ['aria-label', 'title', 'placeholder'].forEach(attr => {
-                        const value = el.getAttribute(attr);
-                        if (value && translations.hasOwnProperty(value)) {
-                            el.setAttribute(attr, translations[value]);
-                        }
-                    });
-                });
-
-                // Ocultar botón "End Chat" de forma agresiva
-                const buttons = shadowRoot.querySelectorAll('button, [role="button"], a');
-                buttons.forEach(el => {
-                    const text = el.textContent.trim();
+                allButtons.forEach(el => {
+                    const text = el.textContent?.trim() || '';
                     const ariaLabel = el.getAttribute('aria-label') || '';
+                    const title = el.getAttribute('title') || '';
                     
-                    if (text.includes('End Chat') || ariaLabel.includes('End Chat') || 
-                        text === 'End Chat' || ariaLabel === 'End Chat') {
-                        el.remove(); // Eliminar completamente el elemento
-                        console.log('🗑️ Botón "End Chat" eliminado');
+                    // Si contiene "End Chat" en cualquier lugar
+                    if (text.toLowerCase().includes('end chat') || 
+                        ariaLabel.toLowerCase().includes('end chat') ||
+                        title.toLowerCase().includes('end chat')) {
+                        
+                        // Técnica 1: Remover del DOM
+                        el.remove();
+                        
+                        // Técnica 2: Si tiene padre, ocultarlo también
+                        if (el.parentElement) {
+                            el.parentElement.style.display = 'none';
+                        }
                     }
                 });
 
-                // Configurar MutationObserver
-                if (!observerInstance) {
-                    observerInstance = new MutationObserver(() => {
-                        translateAndCleanVapiWidget();
-                    });
-                    observerInstance.observe(shadowRoot, { 
-                        childList: true, 
-                        subtree: true,
-                        characterData: true
-                    });
-                    console.log('👀 MutationObserver configurado');
-                }
-            } else if (translationAttempts < MAX_ATTEMPTS) {
-                setTimeout(translateAndCleanVapiWidget, 200);
+                // También intentar ocultar por clase o ID común
+                const endChatElements = shadowRoot.querySelectorAll(
+                    '[class*="end-chat"], [class*="endChat"], [class*="end_chat"], ' +
+                    '[id*="end-chat"], [id*="endChat"], [id*="end_chat"]'
+                );
+                endChatElements.forEach(el => el.remove());
+
+            } else if (attempts < MAX_ATTEMPTS) {
+                setTimeout(hideEndChatButton, 100);
+                return;
+            }
+
+            // Continuar monitoreando cambios
+            if (shadowRoot && attempts < MAX_ATTEMPTS) {
+                setTimeout(hideEndChatButton, 500);
             }
         }
 
-        // Ejecutar múltiples veces para asegurar que funcione
+        // Ejecutar múltiples veces
+        document.addEventListener('DOMContentLoaded', hideEndChatButton);
         window.addEventListener('load', () => {
-            setTimeout(translateAndCleanVapiWidget, 500);
-            setTimeout(translateAndCleanVapiWidget, 1000);
-            setTimeout(translateAndCleanVapiWidget, 2000);
-            setTimeout(translateAndCleanVapiWidget, 3000);
+            hideEndChatButton();
+            setTimeout(hideEndChatButton, 500);
+            setTimeout(hideEndChatButton, 1000);
+            setTimeout(hideEndChatButton, 2000);
+            setTimeout(hideEndChatButton, 3000);
+            setTimeout(hideEndChatButton, 5000);
         });
         
-        // Iniciar inmediatamente también
-        translateAndCleanVapiWidget();
+        // También iniciar inmediatamente
+        hideEndChatButton();
+        setInterval(hideEndChatButton, 2000); // Revisar cada 2 segundos
     })();
     </script>
 </body>
