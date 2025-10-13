@@ -13,10 +13,6 @@ externalPort = 80
 localPort = 5000
 externalPort = 80
 
-[[ports]]
-localPort = 35087
-externalPort = 3000
-
 [agent]
 expertMode = true
 
@@ -43,3 +39,7 @@ waitForPort = 5000
 
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["python3", "-m", "http.server", "5000"]
