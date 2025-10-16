@@ -160,11 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ========================================
-    // NOTA: El botón de WhatsApp ahora está integrado en el widget unificado
-    // Ver: js/unified-contact-widget.js
-    // ========================================
-
     // Funcionalidad del formulario de contacto
     const contactForms = document.querySelectorAll(".contact-form");
     contactForms.forEach((form) => {
