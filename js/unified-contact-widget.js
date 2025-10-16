@@ -1,15 +1,15 @@
-(function () {
-    "use strict";
+(function() {
+    'use strict';
 
     // ==========================================
     // CONFIGURACIÓN
     // ==========================================
     const CONFIG = {
-        primaryColor: "#2E7D32",
-        secondaryColor: "#1B5E20",
-        whatsappColor: "#25D366",
-        whatsappNumber: "5493465432688",
-        position: "bottom-right", // bottom-right o bottom-left
+        primaryColor: '#2E7D32',
+        secondaryColor: '#1B5E20',
+        whatsappColor: '#25D366',
+        whatsappNumber: '5493465432688',
+        position: 'bottom-right' // bottom-right o bottom-left
     };
 
     let isExpanded = false;
@@ -76,7 +76,7 @@
             </div>
         `;
 
-        document.body.insertAdjacentHTML("beforeend", widgetHTML);
+        document.body.insertAdjacentHTML('beforeend', widgetHTML);
     }
 
     // ==========================================
@@ -303,7 +303,7 @@
             }
         `;
 
-        const styleSheet = document.createElement("style");
+        const styleSheet = document.createElement('style');
         styleSheet.textContent = styles;
         document.head.appendChild(styleSheet);
     }
@@ -313,18 +313,18 @@
     // ==========================================
     function toggleMenu() {
         isExpanded = !isExpanded;
-        const mainButton = document.getElementById("main-contact-button");
-        const menu = document.getElementById("contact-options-menu");
+        const mainButton = document.getElementById('main-contact-button');
+        const menu = document.getElementById('contact-options-menu');
 
         if (isExpanded) {
-            mainButton.classList.add("expanded");
-            menu.style.display = "flex";
-            setTimeout(() => menu.classList.add("show"), 10);
+            mainButton.classList.add('expanded');
+            menu.style.display = 'flex';
+            setTimeout(() => menu.classList.add('show'), 10);
         } else {
-            menu.classList.remove("show");
+            menu.classList.remove('show');
             setTimeout(() => {
-                menu.style.display = "none";
-                mainButton.classList.remove("expanded");
+                menu.style.display = 'none';
+                mainButton.classList.remove('expanded');
             }, 400);
         }
     }
@@ -333,21 +333,21 @@
     // ACCIONES DE CADA OPCIÓN
     // ==========================================
     function handleOptionClick(action) {
-        switch (action) {
-            case "voice":
+        switch(action) {
+            case 'voice':
                 // Activar Vapi widget
                 activateVapiWidget();
                 break;
-            case "chat":
+            case 'chat':
                 // Abrir chat de Mavilda
                 openMavildalChat();
                 break;
-            case "whatsapp":
+            case 'whatsapp':
                 // Abrir WhatsApp
                 openWhatsApp();
                 break;
         }
-
+        
         // Cerrar el menú después de seleccionar
         toggleMenu();
     }
@@ -356,18 +356,16 @@
     // ACTIVAR VAPI WIDGET
     // ==========================================
     function activateVapiWidget() {
-        const vapiWidget = document.querySelector("vapi-widget");
+        const vapiWidget = document.querySelector('vapi-widget');
         if (vapiWidget) {
             // Simular click en el botón de Vapi para abrir
-            const vapiButton =
-                vapiWidget.shadowRoot?.querySelector(
-                    'button[aria-label*="Call"]',
-                ) || vapiWidget.shadowRoot?.querySelector("button");
+            const vapiButton = vapiWidget.shadowRoot?.querySelector('button[aria-label*="Call"]') || 
+                              vapiWidget.shadowRoot?.querySelector('button');
             if (vapiButton) {
                 vapiButton.click();
             }
         } else {
-            console.warn("Vapi widget no encontrado");
+            console.warn('Vapi widget no encontrado');
         }
     }
 
@@ -376,11 +374,11 @@
     // ==========================================
     function openMavildalChat() {
         // Buscar el botón del chat de Mavilda
-        const mavildalButton = document.getElementById("mavilda-chat-button");
+        const mavildalButton = document.getElementById('mavilda-chat-button');
         if (mavildalButton) {
             mavildalButton.click();
         } else {
-            console.warn("Botón de Mavilda no encontrado");
+            console.warn('Botón de Mavilda no encontrado');
         }
     }
 
@@ -388,18 +386,16 @@
     // ABRIR WHATSAPP
     // ==========================================
     function openWhatsApp() {
-        const message = encodeURIComponent(
-            "Hola, vengo desde el sitio de SER AGRO",
-        );
+        const message = encodeURIComponent('Hola, vengo desde el sitio de SER AGRO');
         const whatsappURL = `https://api.whatsapp.com/send?phone=${CONFIG.whatsappNumber}&text=${message}`;
-        window.open(whatsappURL, "_blank");
+        window.open(whatsappURL, '_blank');
     }
 
     // ==========================================
     // CERRAR MENÚ AL HACER CLICK FUERA
     // ==========================================
     function handleClickOutside(event) {
-        const widget = document.getElementById("unified-contact-widget");
+        const widget = document.getElementById('unified-contact-widget');
         if (isExpanded && widget && !widget.contains(event.target)) {
             toggleMenu();
         }
@@ -409,26 +405,20 @@
     // INICIALIZAR EVENTOS
     // ==========================================
     function initializeEvents() {
-        const mainButton = document.getElementById("main-contact-button");
-        mainButton.addEventListener("click", toggleMenu);
+        const mainButton = document.getElementById('main-contact-button');
+        mainButton.addEventListener('click', toggleMenu);
 
         // Event listeners para cada opción
-        document
-            .getElementById("option-vapi")
-            .addEventListener("click", () => handleOptionClick("voice"));
-        document
-            .getElementById("option-chat")
-            .addEventListener("click", () => handleOptionClick("chat"));
-        document
-            .getElementById("option-whatsapp")
-            .addEventListener("click", () => handleOptionClick("whatsapp"));
+        document.getElementById('option-vapi').addEventListener('click', () => handleOptionClick('voice'));
+        document.getElementById('option-chat').addEventListener('click', () => handleOptionClick('chat'));
+        document.getElementById('option-whatsapp').addEventListener('click', () => handleOptionClick('whatsapp'));
 
         // Cerrar al hacer click fuera
-        document.addEventListener("click", handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
 
         // Cerrar con Escape
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && isExpanded) {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isExpanded) {
                 toggleMenu();
             }
         });
@@ -439,21 +429,21 @@
     // ==========================================
     function hideOriginalWidgets() {
         // Ocultar botón de WhatsApp original
-        const whatsappButton = document.querySelector(".whatsapp-float-button");
+        const whatsappButton = document.querySelector('.whatsapp-float-button');
         if (whatsappButton) {
-            whatsappButton.style.display = "none";
+            whatsappButton.style.display = 'none';
         }
 
         // Ocultar botón de Mavilda original
-        const mavildalButton = document.getElementById("mavilda-chat-button");
+        const mavildalButton = document.getElementById('mavilda-chat-button');
         if (mavildalButton) {
-            mavildalButton.style.display = "none";
+            mavildalButton.style.display = 'none';
         }
 
         // Ocultar widget de Vapi (solo el botón flotante, no el widget completo)
-        const vapiWidget = document.querySelector("vapi-widget");
+        const vapiWidget = document.querySelector('vapi-widget');
         if (vapiWidget && vapiWidget.shadowRoot) {
-            const style = document.createElement("style");
+            const style = document.createElement('style');
             style.textContent = `
                 :host {
                     display: none !important;
@@ -481,16 +471,15 @@
             // Inicializar eventos
             initializeEvents();
 
-            console.log(
-                "✅ Widget unificado de contacto cargado correctamente",
-            );
+            console.log('✅ Widget unificado de contacto cargado correctamente');
         }, 1000);
     }
 
     // Ejecutar cuando el DOM esté listo
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
+
 })();
